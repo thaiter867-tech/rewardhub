@@ -10,7 +10,7 @@
         .container { max-width: 500px; margin: 0 auto; }
         
         /* Header & Wallet */
-        .header { text-align: center; margin-bottom: 25px; padding: 20px; background: linear-gradient(135deg, #1e1b4b, #311042); border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); border: 1px solid #493058; }
+        .header { text-align: center; margin-bottom: 25px; padding: 20px; background: linear-gradient(135deg, #1e1b4b, #311042); border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.02); }
         h1 { font-size: 24px; color: #6366f1; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
         .wallet { font-size: 22px; font-weight: bold; color: #f59e0b; background: rgba(0,0,0,0.3); display: inline-block; padding: 8px 20px; border-radius: 50px; border: 1px dashed #f59e0b; }
         
@@ -18,16 +18,16 @@
         h2 { font-size: 18px; margin: 20px 0 10px 5px; color: #94a3b8; border-left: 4px solid #6366f1; padding-left: 8px; }
         
         /* Task Cards */
-        .card { background-color: #1e293b; border-radius: 12px; padding: 15px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #334155; transition: all 0.3s ease; }
+        .card { background-color: #1e293b; border-radius: 12px; padding: 15px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #334155; transition: transform 120ms ease; }
         .card:hover { border-color: #6366f1; transform: translateY(-2px); }
         .task-info h3 { font-size: 16px; color: #fff; margin-bottom: 4px; }
         .task-info p { font-size: 12px; color: #94a3b8; }
-        .coin-tag { background: #10b981; color: #fff; padding: 6px 12px; border-radius: 8px; font-weight: bold; font-size: 14px; cursor: pointer; text-decoration: none; text-align: center; min-width: 130px; border: none; transition: all 0.3s ease; }
+        .coin-tag { background: #10b981; color: #fff; padding: 6px 12px; border-radius: 8px; font-weight: bold; font-size: 14px; cursor: pointer; text-decoration: none; text-align: center; min-width: 110px; }
         .coin-tag:hover { background: #059669; }
         .coin-tag:disabled { cursor: not-allowed; opacity: 0.8; background: #10b981; }
         
         /* View More Tasks Button */
-        .view-more-btn { background: none; border: none; color: #6366f1; font-size: 14px; font-weight: 600; cursor: pointer; text-decoration: none; padding: 10px 0; margin: 20px 0; display: block; width: 100%; text-align: center; transition: all 0.3s ease; }
+        .view-more-btn { background: none; border: none; color: #6366f1; font-size: 14px; font-weight: 600; cursor: pointer; text-decoration: none; padding: 10px 0; margin: 20px 0; display: block; }
         .view-more-btn:hover { color: #818cf8; text-decoration: underline; }
         
         /* Loading Spinner Styles */
@@ -44,7 +44,7 @@
         /* Redeem Section */
         .redeem-box { background: #1e293b; padding: 20px; border-radius: 12px; border: 1px dashed #334155; text-align: center; }
         .redeem-subtitle { font-size: 14px; color: #94a3b8; margin-top: 12px; margin-bottom: 12px; font-weight: 500; line-height: 1.5; }
-        .redeem-btn { background: linear-gradient(90deg, #ec4899, #8b5cf6); color: white; border: none; padding: 12px 30px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; }
+        .redeem-btn { background: linear-gradient(90deg, #ec4899, #8b5cf6); color: white; border: none; padding: 12px 30px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; }
         .redeem-btn:hover { opacity: 0.9; }
         .note { font-size: 11px; color: #94a3b8; margin-top: 8px; }
 
@@ -78,7 +78,7 @@
             <h3>WinZO Games</h3>
             <p>Install + Register with New Number</p>
         </div>
-        <button class="coin-tag" onclick="handleTaskClick(this)">+ 1,500 Coins</button>
+        <button class="coin-tag" onclick="handleTaskClick(this)">+ 950 Coins</button>
     </div>
 
     <div class="card">
@@ -86,7 +86,7 @@
             <h3>Moj App</h3>
             <p>Download + Watch Videos for 2 Mins</p>
         </div>
-        <button class="coin-tag" onclick="handleTaskClick(this)">+ 700 Coins</button>
+        <button class="coin-tag" onclick="handleTaskClick(this)">+ 800 Coins</button>
     </div>
 
     <div class="card">
@@ -102,7 +102,7 @@
             <h3>Asphalt 9: Car Racing</h3>
             <p>Install + Finish 1st Race</p>
         </div>
-        <button class="coin-tag" onclick="handleTaskClick(this)">+ 900 Coins</button>
+        <button class="coin-tag" onclick="handleTaskClick(this)">+ 750 Coins</button>
     </div>
 
     <div class="card">
@@ -155,7 +155,7 @@
         <h3>Terms of Service</h3>
         <p>Please read these terms carefully before using our platform.</p>
         <p><strong>1. Eligibility:</strong> Users must complete offers honestly. Multiple accounts per person are strictly prohibited.</p>
-        <p><strong>2. Fraud & VPN Prevention:</strong> Use of VPN, proxies, emulators, or automated bots to generate fake task completions will lead to an immediate ban and forfeiture of all accumulated coins.</p>
+        <p><strong>2. Fraud & VPN Prevention:</strong> Use of VPN, proxies, emulators, or automated bots to generate fake task completions will lead to an immediate ban and forfeiture of all accumulated rewards.</p>
         <p><strong>3. Reward Delivery:</strong> All valid reward redemption requests are manually verified and processed within 10 minutes to 4 hours.</p>
         <button class="close-btn" onclick="closeModal('termsModal')">Close</button>
     </div>
@@ -177,11 +177,11 @@
             button.innerHTML = 'Connection pending. Active soon!';
             // Button remains disabled while showing pending message
             
-            // After 3 more seconds (5 total), restore the button to original state
+            // After 2 more seconds (4 total), restore the button to original state
             setTimeout(() => {
                 button.innerText = originalText;
                 button.disabled = false;
-            }, 3000);
+            }, 2000);
         }, 2000);
     }
 
