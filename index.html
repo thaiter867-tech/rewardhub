@@ -1,1 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameReward Hub - Earn Daily Codes</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+        body { background-color: #0f172a; color: #f8fafc; padding: 20px; }
+        .container { max-width: 500px; margin: 0 auto; }
+        
+        /* Header & Wallet */
+        .header { text-align: center; margin-bottom: 25px; padding: 20px; background: linear-gradient(135deg, #1e1b4b, #311042); border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); border: 1px solid #4338ca; }
+        h1 { font-size: 24px; color: #6366f1; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
+        .wallet { font-size: 22px; font-weight: bold; color: #f59e0b; background: rgba(0,0,0,0.3); display: inline-block; padding: 8px 20px; border-radius: 50px; border: 1px dashed #f59e0b; }
+        
+        /* Section Titles */
+        h2 { font-size: 18px; margin: 20px 0 10px 5px; color: #94a3b8; border-left: 4px solid #6366f1; padding-left: 8px; }
+        
+        /* Task Cards */
+        .card { background-color: #1e293b; border-radius: 12px; padding: 15px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #334155; transition: 0.3s; }
+        .card:hover { border-color: #6366f1; transform: translateY(-2px); }
+        .task-info h3 { font-size: 16px; color: #fff; margin-bottom: 4px; }
+        .task-info p { font-size: 12px; color: #94a3b8; }
+        .coin-tag { background: #10b981; color: #fff; padding: 6px 12px; border-radius: 8px; font-weight: bold; font-size: 14px; cursor: pointer; text-decoration: none; text-align: center; min-width: 110px; border: none; }
+        .coin-tag:hover { background: #059669; }
+        
+        /* Redeem Section */
+        .redeem-box { background: #1e293b; padding: 20px; border-radius: 12px; border: 1px dashed #334155; text-align: center; }
+        .redeem-btn { background: linear-gradient(90deg, #ec4899, #8b5cf6); color: white; border: none; padding: 12px 30px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; width: 100%; margin-top: 10px; box-shadow: 0 4px 10px rgba(236, 72, 153, 0.3); }
+        .redeem-btn:hover { opacity: 0.9; }
+        .note { font-size: 11px; color: #64748b; margin-top: 8px; }
 
+        /* Professional Footer */
+        .footer { text-align: center; margin-top: 40px; padding: 20px 10px; border-top: 1px solid #1e293b; font-size: 12px; color: #64748b; line-height: 1.8; }
+        .footer a { color: #6366f1; text-decoration: none; margin: 0 8px; font-weight: 500; }
+        .footer a:hover { text-decoration: underline; }
+
+        /* Legal Modals (Popups) */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; padding: 20px; z-index: 1000; }
+        .modal-content { background: #1e293b; padding: 20px; border-radius: 12px; max-width: 450px; max-height: 75vh; overflow-y: auto; border: 1px solid #334155; text-align: left; position: relative; }
+        .modal h3 { font-size: 18px; color: #fff; margin-bottom: 12px; border-bottom: 1px solid #334155; padding-bottom: 5px; }
+        .modal p { font-size: 13px; color: #94a3b8; margin-bottom: 10px; line-height: 1.5; }
+        .close-btn { background: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: bold; float: right; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Wallet Header -->
+    <div class="header">
+        <h1>🎮 GameHub Reward</h1>
+        <div class="wallet">🪙 <span id="balance">0</span> Coins</div>
+    </div>
+
+    <!-- Task Zone -->
+    <h2>🔥 Top High Paying Tasks</h2>
+    
+    <div class="card">
+        <div class="task-info">
+            <h3>WinZO Games</h3>
+            <p>Install + Register with New Number</p>
+        </div>
+        <button class="coin-tag" onclick="completeTask('WinZO', 1500)">+ 1,500 Coins</button>
+    </div>
+
+    <div class="card">
+        <div class="task-info">
+            <h3>Moj App</h3>
+            <p>Download + Watch Videos for 2 Mins</p>
+        </div>
+        <button class="coin-tag" onclick="completeTask('Moj', 700)">+ 700 Coins</button>
+    </div>
+
+    <!-- Redeem Zone -->
+    <h2>🎁 Withdraw Rewards</h2>
+    <div class="redeem-box">
+        <p style="font-size: 15px; color: #e2e8f0;">Google Play Redeem Code (₹20)</p>
+        <p style="font-size: 13px; color: #f59e0b; margin-top: 5px;">Required: 2,000 Coins</p>
+        <button class="redeem-btn" onclick="redeemCode()">Redeem Now</button>
+        <p class="note">⚠️ Delivery Time: 10 Minutes to 4 Hours</p>
+    </div>
+
+    <!-- Professional Footer Links -->
+    <div class="footer">
+        <p>© 2026 GameReward Hub. All Rights Reserved.</p>
+        <p>Contact Support: <span style="color: #e2e8f0;">support@gamerewardhub.com</span></p>
+        <p style="margin-top: 5px;">
+            <a href="javascript:void(0)" onclick="openModal('privacyModal')">Privacy Policy</a> | 
+            <a href="javascript:void(0)" onclick="openModal('termsModal')">Terms of Service</a>
+        </p>
+    </div>
+</div>
+
+<!-- Privacy Policy Popup -->
+<div id="privacyModal" class="modal">
+    <div class="modal-content">
+        <h3>Privacy Policy</h3>
+        <p>Welcome to GameReward Hub. Your privacy is critically important to us.</p>
+        <p><strong>1. Data Collection:</strong> We only collect minimal user identification to securely track and credit coins after successful task completion.</p>
+        <p><strong>2. Third-Party Advertisers:</strong> We partner with trusted offerwall networks. These networks may track app installation status to verify your rewards accurately.</p>
+        <p><strong>3. Data Security:</strong> Your virtual wallet balance and task history are completely protected and are never shared with any unauthorized third parties.</p>
+        <button class="close-btn" onclick="closeModal('privacyModal')">Close</button>
+    </div>
+</div>
+
+<!-- Terms of Service Popup -->
+<div id="termsModal" class="modal">
+    <div class="modal-content">
+        <h3>Terms of Service</h3>
+        <p>Please read these terms carefully before using our platform.</p>
+        <p><strong>1. Eligibility:</strong> Users must complete offers honestly. Multiple accounts per person are strictly prohibited.</p>
+        <p><strong>2. Fraud & VPN Prevention:</strong> Use of VPN, proxies, emulators, or automated bots to generate fake task completions will lead to an immediate ban and forfeiture of all accumulated coins.</p>
+        <p><strong>3. Reward Delivery:</strong> All valid reward redemption requests are manually verified and processed within 10 minutes to 4 hours.</p>
+        <button class="close-btn" onclick="closeModal('termsModal')">Close</button>
+    </div>
+</div>
+
+<script>
+    let currentCoins = 0;
+
+    function completeTask(taskName, coins) {
+        alert(`Redirecting to ${taskName} task...\nAfter completion, our automated system will verify the install status.`);
+        // Simulating automatic verification for approval stage
+        setTimeout(() => {
+            currentCoins += coins;
+            document.getElementById('balance').innerText = currentCoins.toLocaleString();
+            alert(`🎉 Automatic Verification Success!\n${coins} Coins have been added to your wallet.`);
+        }, 2000);
+    }
+
+    function redeemCode() {
+        if(currentCoins < 2000) {
+            alert(`❌ Insufficient Balance!\nYou need at least 2,000 Coins to redeem a ₹20 Code. Complete more tasks!`);
+        } else {
+            currentCoins -= 2000;
+            document.getElementById('balance').innerText = currentCoins.toLocaleString();
+            alert(`✅ Request Successfully Submitted!\nYour ₹20 Redeem Code will be reviewed and delivered within 4 hours.`);
+        }
+    }
+
+    function openModal(id) {
+        document.getElementById(id).style.display = 'flex';
+    }
+    function closeModal(id) {
+        document.getElementById(id).style.display = 'none';
+    }
+</script>
+
+</body>
+</html>
