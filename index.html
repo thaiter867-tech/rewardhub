@@ -10,7 +10,7 @@
         .container { max-width: 500px; margin: 0 auto; }
         
         /* Header & Wallet */
-        .header { text-align: center; margin-bottom: 25px; padding: 20px; background: linear-gradient(135deg, #1e1b4b, #311042); border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); border: 1px solid #4c1d95; }
+        .header { text-align: center; margin-bottom: 25px; padding: 20px; background: linear-gradient(135deg, #1e1b4b, #311042); border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); border: 1px solid #493058; }
         h1 { font-size: 24px; color: #6366f1; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
         .wallet { font-size: 22px; font-weight: bold; color: #f59e0b; background: rgba(0,0,0,0.3); display: inline-block; padding: 8px 20px; border-radius: 50px; border: 1px dashed #f59e0b; }
         
@@ -22,7 +22,7 @@
         .card:hover { border-color: #6366f1; transform: translateY(-2px); }
         .task-info h3 { font-size: 16px; color: #fff; margin-bottom: 4px; }
         .task-info p { font-size: 12px; color: #94a3b8; }
-        .coin-tag { background: #10b981; color: #fff; padding: 6px 12px; border-radius: 8px; font-weight: bold; font-size: 14px; cursor: pointer; text-decoration: none; text-align: center; min-width: 140px; border: none; transition: all 0.3s ease; }
+        .coin-tag { background: #10b981; color: #fff; padding: 6px 12px; border-radius: 8px; font-weight: bold; font-size: 14px; cursor: pointer; text-decoration: none; text-align: center; min-width: 130px; border: none; transition: all 0.3s ease; }
         .coin-tag:hover { background: #059669; }
         .coin-tag:disabled { cursor: not-allowed; opacity: 0.8; background: #10b981; }
         
@@ -44,7 +44,7 @@
         /* Redeem Section */
         .redeem-box { background: #1e293b; padding: 20px; border-radius: 12px; border: 1px dashed #334155; text-align: center; }
         .redeem-subtitle { font-size: 14px; color: #94a3b8; margin-top: 12px; margin-bottom: 12px; font-weight: 500; line-height: 1.5; }
-        .redeem-btn { background: linear-gradient(90deg, #ec4899, #8b5cf6); color: white; border: none; padding: 12px 30px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; transition: opacity 0.3s ease; }
+        .redeem-btn { background: linear-gradient(90deg, #ec4899, #8b5cf6); color: white; border: none; padding: 12px 30px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; }
         .redeem-btn:hover { opacity: 0.9; }
         .note { font-size: 11px; color: #94a3b8; margin-top: 8px; }
 
@@ -165,7 +165,8 @@
     let currentCoins = 0;
 
     function handleTaskClick(button) {
-        const originalContent = button.innerHTML;
+        // Save the original button text
+        const originalText = button.innerText;
         
         // Disable the button and show loading spinner
         button.disabled = true;
@@ -174,7 +175,13 @@
         // After 2 seconds, show the pending status message
         setTimeout(() => {
             button.innerHTML = 'Connection pending. Active soon!';
-            // Button remains disabled
+            // Button remains disabled while showing pending message
+            
+            // After 3 more seconds (5 total), restore the button to original state
+            setTimeout(() => {
+                button.innerText = originalText;
+                button.disabled = false;
+            }, 3000);
         }, 2000);
     }
 
