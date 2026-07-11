@@ -10,7 +10,7 @@
         .container { max-width: 500px; margin: 0 auto; }
         
         /* Header & Wallet */
-        .header { text-align: center; margin-bottom: 25px; padding: 20px; background: linear-gradient(135deg, #1e1b4b, #311042); border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); border: 1px solid #6366f1; }
+        .header { text-align: center; margin-bottom: 25px; padding: 20px; background: linear-gradient(135deg, #1e1b4b, #311042); border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); border: 1px solid #3f3855; }
         h1 { font-size: 24px; color: #6366f1; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
         .wallet { font-size: 22px; font-weight: bold; color: #f59e0b; background: rgba(0,0,0,0.3); display: inline-block; padding: 8px 20px; border-radius: 50px; border: 1px dashed #f59e0b; }
         
@@ -18,16 +18,16 @@
         h2 { font-size: 18px; margin: 20px 0 10px 5px; color: #94a3b8; border-left: 4px solid #6366f1; padding-left: 8px; }
         
         /* Task Cards */
-        .card { background-color: #0b1220; border-radius: 12px; padding: 15px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #132033; transition: all 250ms; }
+        .card { background-color: #0b1220; border-radius: 12px; padding: 15px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #132033; transition: all 200ms ease; }
         .card:hover { border-color: #6366f1; transform: translateY(-2px); }
         .task-info h3 { font-size: 16px; color: #fff; margin-bottom: 4px; }
         .task-info p { font-size: 12px; color: #94a3b8; }
-        .coin-tag { background: linear-gradient(180deg, #10b981, #059669); color: #fff; padding: 8px 14px; border-radius: 10px; font-weight: 700; font-size: 14px; cursor: pointer; text-decoration: none; transition: all 250ms; }
+        .coin-tag { background: linear-gradient(180deg, #10b981, #059669); color: #fff; padding: 8px 14px; border-radius: 10px; font-weight: 700; font-size: 14px; cursor: pointer; text-decoration: none; transition: all 200ms ease; border: none; }
         .coin-tag:hover { filter: brightness(1.04); }
         .coin-tag:disabled { cursor: not-allowed; opacity: 0.85; filter: none; }
         
         /* View More Tasks Button */
-        .view-more-btn { background: none; border: none; color: #6366f1; font-size: 14px; font-weight: 600; cursor: pointer; text-decoration: none; padding: 10px 0; margin: 20px 0; display: block; width: 100%; }
+        .view-more-btn { background: none; border: none; color: #6366f1; font-size: 14px; font-weight: 600; cursor: pointer; text-decoration: none; padding: 10px 0; margin: 20px 0; display: block; width: 100%; transition: all 200ms ease; }
         .view-more-btn:hover { color: #818cf8; text-decoration: underline; }
         
         /* Loading Spinner Styles */
@@ -37,6 +37,17 @@
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         .loading-text { font-size: 13px; color: #94a3b8; font-weight: 500; }
@@ -84,10 +95,61 @@
             -moz-appearance: textfield;
         }
         
-        .redeem-btn { background: linear-gradient(90deg, #ec4899, #8b5cf6); color: white; border: none; padding: 10px 30px; font-size: 15px; font-weight: bold; border-radius: 8px; cursor: pointer; transition: all 250ms; }
+        .redeem-btn { background: linear-gradient(90deg, #ec4899, #8b5cf6); color: white; border: none; padding: 10px 30px; font-size: 15px; font-weight: bold; border-radius: 8px; cursor: pointer; transition: all 200ms ease; }
         .redeem-btn:hover { opacity: 0.95; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3); }
         .redeem-btn:active { transform: translateY(0); }
         .note { font-size: 11px; color: #94a3b8; margin-top: 8px; }
+
+        /* Redeem Code Box Styling */
+        .code-box-hidden {
+            display: none;
+        }
+
+        .code-box-visible {
+            display: flex;
+            animation: fadeIn 0.5s ease;
+            margin-top: 15px;
+            background-color: #0f172a;
+            border: 2px solid #6366f1;
+            border-radius: 10px;
+            padding: 12px 16px;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.2);
+        }
+
+        .redeem-code-text {
+            font-size: 16px;
+            font-weight: 700;
+            color: #6366f1;
+            letter-spacing: 2px;
+            flex: 1;
+            word-break: break-all;
+        }
+
+        .copy-btn {
+            background: linear-gradient(90deg, #6366f1, #8b5cf6);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 200ms ease;
+            margin-left: 10px;
+            white-space: nowrap;
+        }
+
+        .copy-btn:hover {
+            opacity: 0.9;
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+        }
+
+        .copy-btn:active {
+            transform: scale(0.98);
+        }
 
         /* Professional Footer */
         .footer { text-align: center; margin-top: 40px; padding: 20px 10px; border-top: 1px solid #0b1220; font-size: 12px; color: #64748b; line-height: 1.8; }
@@ -161,6 +223,23 @@
             
             .redeem-btn {
                 width: 100%;
+            }
+
+            .code-box-visible {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+
+            .redeem-code-text {
+                width: 100%;
+                text-align: center;
+            }
+
+            .copy-btn {
+                width: 100%;
+                margin-left: 0;
+                text-align: center;
             }
 
             #toast-notification {
@@ -242,6 +321,12 @@
             <button class="redeem-btn" onclick="redeemCode()">Redeem Now</button>
         </div>
         <p class="note">⚠️ Minimum: 1,000 Coins | Delivery: 10 Minutes to 4 Hours</p>
+        
+        <!-- Redeem Code Display Box -->
+        <div id="redeem-code-box" class="code-box-hidden">
+            <span class="redeem-code-text" id="redeem-code-text"></span>
+            <button class="copy-btn" onclick="copyRedeemCode()">📋 Copy</button>
+        </div>
     </div>
 
     <!-- Professional Footer Links -->
@@ -308,6 +393,14 @@
         }, 2000);
     }
 
+    function generatePromoCode() {
+        // Generate a realistic Google Play promo code format: GPLAY-XXXX-XXXX-XXXX
+        const randomSegment = () => {
+            return Math.random().toString(36).substring(2, 6).toUpperCase();
+        };
+        return `GPLAY-${randomSegment()}-${randomSegment()}-${randomSegment()}`;
+    }
+
     function handleTaskClick(button) {
         // Save the original button text
         const originalText = button.innerText;
@@ -358,6 +451,24 @@
         }, 2000);
     }
 
+    function copyRedeemCode() {
+        const codeText = document.getElementById('redeem-code-text').innerText;
+        
+        // Copy to clipboard
+        navigator.clipboard.writeText(codeText).then(() => {
+            showToast("Code Copied to Clipboard!", "success");
+        }).catch((err) => {
+            // Fallback for older browsers
+            const textArea = document.createElement('textarea');
+            textArea.value = codeText;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            showToast("Code Copied to Clipboard!", "success");
+        });
+    }
+
     function redeemCode() {
         const redeemInput = document.getElementById('redeemAmount');
         const redeemAmount = parseInt(redeemInput.value);
@@ -378,6 +489,15 @@
         currentCoins -= redeemAmount;
         document.getElementById('balance').innerText = currentCoins.toLocaleString();
         showToast("Redeem Successful! Coins deducted.", "success");
+        
+        // Generate promo code and display the code box
+        const promoCode = generatePromoCode();
+        const redeemCodeBox = document.getElementById('redeem-code-box');
+        const redeemCodeText = document.getElementById('redeem-code-text');
+        
+        redeemCodeText.innerText = promoCode;
+        redeemCodeBox.classList.remove('code-box-hidden');
+        redeemCodeBox.classList.add('code-box-visible');
         
         // Clear the input field after successful redemption
         redeemInput.value = '';
