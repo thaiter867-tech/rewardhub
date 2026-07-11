@@ -10,7 +10,7 @@
         .container { max-width: 500px; margin: 0 auto; }
         
         /* Header & Wallet */
-        .header { text-align: center; margin-bottom: 25px; padding: 20px; background: linear-gradient(135deg, #1e1b4b, #311042); border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.03); }
+        .header { text-align: center; margin-bottom: 25px; padding: 20px; background: linear-gradient(135deg, #1e1b4b, #311042); border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); border: 1px solid #462d6b; }
         h1 { font-size: 24px; color: #6366f1; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
         .wallet { font-size: 22px; font-weight: bold; color: #f59e0b; background: rgba(0,0,0,0.3); display: inline-block; padding: 8px 20px; border-radius: 50px; border: 1px dashed #f59e0b; }
         
@@ -18,16 +18,16 @@
         h2 { font-size: 18px; margin: 20px 0 10px 5px; color: #94a3b8; border-left: 4px solid #6366f1; padding-left: 8px; }
         
         /* Task Cards */
-        .card { background-color: #0b1220; border-radius: 12px; padding: 15px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #132033; transition: transform 120ms ease, border-color 120ms ease; }
+        .card { background-color: #0b1220; border-radius: 12px; padding: 15px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #132033; transition: all 300ms ease; }
         .card:hover { border-color: #6366f1; transform: translateY(-2px); }
         .task-info h3 { font-size: 16px; color: #fff; margin-bottom: 4px; }
         .task-info p { font-size: 12px; color: #94a3b8; }
-        .coin-tag { background: linear-gradient(180deg, #10b981, #059669); color: #fff; padding: 8px 14px; border-radius: 10px; font-weight: 700; font-size: 14px; cursor: pointer; text-decoration: none; text-align: center; min-width: 110px; border: none; box-shadow: 0 6px 18px rgba(16,185,129,0.12), inset 0 -2px 0 rgba(0,0,0,0.08); }
+        .coin-tag { background: linear-gradient(180deg, #10b981, #059669); color: #fff; padding: 8px 14px; border-radius: 10px; font-weight: 700; font-size: 14px; cursor: pointer; text-decoration: none; border: none; transition: all 200ms ease; }
         .coin-tag:hover { filter: brightness(1.04); }
         .coin-tag:disabled { cursor: not-allowed; opacity: 0.85; filter: none; }
         
         /* View More Tasks Button */
-        .view-more-btn { background: none; border: none; color: #6366f1; font-size: 14px; font-weight: 600; cursor: pointer; text-decoration: none; padding: 10px 0; margin: 20px 0; display: block; }
+        .view-more-btn { background: none; border: none; color: #6366f1; font-size: 14px; font-weight: 600; cursor: pointer; text-decoration: none; padding: 10px 0; margin: 20px 0; display: block; transition: all 200ms ease; }
         .view-more-btn:hover { color: #818cf8; text-decoration: underline; }
         
         /* Loading Spinner Styles */
@@ -44,8 +44,49 @@
         /* Redeem Section */
         .redeem-box { background: #1e293b; padding: 20px; border-radius: 12px; border: 1px dashed #334155; text-align: center; }
         .redeem-subtitle { font-size: 14px; color: #94a3b8; margin-top: 12px; margin-bottom: 12px; font-weight: 500; line-height: 1.5; }
-        .redeem-btn { background: linear-gradient(90deg, #ec4899, #8b5cf6); color: white; border: none; padding: 12px 30px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; }
-        .redeem-btn:hover { opacity: 0.95; }
+        
+        /* Dynamic Redeem Input Container */
+        .redeem-input-container { display: flex; gap: 10px; justify-content: center; align-items: center; margin: 15px 0; flex-wrap: wrap; }
+        
+        /* Redeem Input Field Styling */
+        #redeemAmount {
+            flex: 1;
+            min-width: 150px;
+            background-color: #1e293b;
+            color: #ffffff;
+            border: 1px solid #334155;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 200ms ease;
+            text-align: center;
+        }
+        
+        #redeemAmount::placeholder {
+            color: #64748b;
+        }
+        
+        #redeemAmount:focus {
+            outline: none;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+            background-color: #0f172a;
+        }
+        
+        #redeemAmount::-webkit-outer-spin-button,
+        #redeemAmount::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        
+        #redeemAmount[type=number] {
+            -moz-appearance: textfield;
+        }
+        
+        .redeem-btn { background: linear-gradient(90deg, #ec4899, #8b5cf6); color: white; border: none; padding: 10px 30px; font-size: 15px; font-weight: bold; border-radius: 8px; cursor: pointer; transition: all 200ms ease; white-space: nowrap; }
+        .redeem-btn:hover { opacity: 0.95; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3); }
+        .redeem-btn:active { transform: translateY(0); }
         .note { font-size: 11px; color: #94a3b8; margin-top: 8px; }
 
         /* Professional Footer */
@@ -59,6 +100,22 @@
         .modal h3 { font-size: 18px; color: #fff; margin-bottom: 12px; border-bottom: 1px solid #334155; padding-bottom: 5px; }
         .modal p { font-size: 13px; color: #94a3b8; margin-bottom: 10px; line-height: 1.5; }
         .close-btn { background: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: bold; float: right; margin-top: 10px; }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 480px) {
+            .redeem-input-container {
+                flex-direction: column;
+            }
+            
+            #redeemAmount {
+                width: 100%;
+                min-width: unset;
+            }
+            
+            .redeem-btn {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
@@ -120,10 +177,11 @@
     <h2>🎁 Withdraw Rewards</h2>
     <p class="redeem-subtitle">Get Redeem Codes for Free Fire, BGMI, and more games</p>
     <div class="redeem-box">
-        <p style="font-size: 15px; color: #e2e8f0;">Google Play Redeem Code (₹10)</p>
-        <p style="font-size: 13px; color: #f59e0b; margin-top: 5px;">Required: 1,000 Coins</p>
-        <button class="redeem-btn" onclick="redeemCode()">Redeem Now</button>
-        <p class="note">⚠️ Delivery Time: 10 Minutes to 4 Hours</p>
+        <div class="redeem-input-container">
+            <input type="number" id="redeemAmount" placeholder="Enter Coins (e.g., 1000)" min="1">
+            <button class="redeem-btn" onclick="redeemCode()">Redeem Now</button>
+        </div>
+        <p class="note">⚠️ Minimum: 1,000 Coins | Delivery: 10 Minutes to 4 Hours</p>
     </div>
 
     <!-- Professional Footer Links -->
@@ -155,7 +213,7 @@
         <h3>Terms of Service</h3>
         <p>Please read these terms carefully before using our platform.</p>
         <p><strong>1. Eligibility:</strong> Users must complete offers honestly. Multiple accounts per person are strictly prohibited.</p>
-        <p><strong>2. Fraud & VPN Prevention:</strong> Use of VPN, proxies, emulators, or automated bots to generate fake task completions will lead to an immediate ban and forfeiture of all accumulated rewards.</p>
+        <p><strong>2. Fraud & VPN Prevention:</strong> Use of VPN, proxies, emulators, or automated bots to generate fake task completions will lead to an immediate ban and forfeiture of all accumulated coins.</p>
         <p><strong>3. Reward Delivery:</strong> All valid reward redemption requests are manually verified and processed within 10 minutes to 4 hours.</p>
         <button class="close-btn" onclick="closeModal('termsModal')">Close</button>
     </div>
@@ -215,13 +273,28 @@
     }
 
     function redeemCode() {
-        if(currentCoins < 1000) {
-            alert(`❌ Insufficient Balance!\nYou need at least 1,000 Coins to redeem a ₹10 Code. Complete more tasks!`);
-        } else {
-            currentCoins -= 1000;
-            document.getElementById('balance').innerText = currentCoins.toLocaleString();
-            alert(`✅ Request Successfully Submitted!\nYour ₹10 Redeem Code will be reviewed and delivered within 4 hours.`);
+        const redeemInput = document.getElementById('redeemAmount');
+        const redeemAmount = parseInt(redeemInput.value);
+        
+        // Validation 1: Check if input is empty or less than 1000
+        if (isNaN(redeemAmount) || redeemAmount < 1000) {
+            alert('Minimum 1,000 Coins required to redeem!');
+            return;
         }
+        
+        // Validation 2: Check if user has sufficient balance
+        if (redeemAmount > currentCoins) {
+            alert('Insufficient Balance! Complete more tasks to collect enough coins.');
+            return;
+        }
+        
+        // Success Flow: Deduct coins and show success message
+        currentCoins -= redeemAmount;
+        document.getElementById('balance').innerText = currentCoins.toLocaleString();
+        alert(`Redeem Successful! ${redeemAmount.toLocaleString()} Coins redeemed.`);
+        
+        // Clear the input field after successful redemption
+        redeemInput.value = '';
     }
 
     function openModal(id) {
