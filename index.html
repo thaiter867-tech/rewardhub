@@ -10,9 +10,38 @@
         .container { max-width: 500px; margin: 0 auto; }
         
         /* Header & Wallet */
-        .header { text-align: center; margin-bottom: 25px; padding: 20px; background: linear-gradient(135deg, #1e1b4b, #311042); border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); border: 1px solid #3f3855; }
+        .header { text-align: center; margin-bottom: 25px; padding: 20px; background: linear-gradient(135deg, #1e1b4b, #311042); border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); border: 1px solid #312e81; position: relative; }
         h1 { font-size: 24px; color: #6366f1; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
         .wallet { font-size: 22px; font-weight: bold; color: #f59e0b; background: rgba(0,0,0,0.3); display: inline-block; padding: 8px 20px; border-radius: 50px; border: 1px dashed #f59e0b; }
+        
+        /* Profile Avatar Circle */
+        .profile-avatar {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border: 2px solid #a78bfa;
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.6), inset 0 0 10px rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            transition: all 300ms ease;
+            user-select: none;
+        }
+
+        .profile-avatar:hover {
+            transform: scale(1.08);
+            box-shadow: 0 0 30px rgba(99, 102, 241, 0.8), inset 0 0 15px rgba(255, 255, 255, 0.15);
+        }
+
+        .profile-avatar:active {
+            transform: scale(0.95);
+        }
         
         /* Section Titles */
         h2 { font-size: 18px; margin: 20px 0 10px 5px; color: #94a3b8; border-left: 4px solid #6366f1; padding-left: 8px; }
@@ -22,12 +51,12 @@
         .card:hover { border-color: #6366f1; transform: translateY(-2px); }
         .task-info h3 { font-size: 16px; color: #fff; margin-bottom: 4px; }
         .task-info p { font-size: 12px; color: #94a3b8; }
-        .coin-tag { background: linear-gradient(180deg, #10b981, #059669); color: #fff; padding: 8px 14px; border-radius: 10px; font-weight: 700; font-size: 14px; cursor: pointer; text-decoration: none; transition: all 200ms ease; border: none; }
+        .coin-tag { background: linear-gradient(180deg, #10b981, #059669); color: #fff; padding: 8px 14px; border-radius: 10px; font-weight: 700; font-size: 14px; cursor: pointer; text-decoration: none; border: none; transition: all 200ms ease; }
         .coin-tag:hover { filter: brightness(1.04); }
         .coin-tag:disabled { cursor: not-allowed; opacity: 0.85; filter: none; }
         
         /* View More Tasks Button */
-        .view-more-btn { background: none; border: none; color: #6366f1; font-size: 14px; font-weight: 600; cursor: pointer; text-decoration: none; padding: 10px 0; margin: 20px 0; display: block; width: 100%; transition: all 200ms ease; }
+        .view-more-btn { background: none; border: none; color: #6366f1; font-size: 14px; font-weight: 600; cursor: pointer; text-decoration: none; padding: 10px 0; margin: 20px 0; display: block; transition: all 200ms ease; }
         .view-more-btn:hover { color: #818cf8; text-decoration: underline; }
         
         /* Loading Spinner Styles */
@@ -163,6 +192,114 @@
         .modal p { font-size: 13px; color: #94a3b8; margin-bottom: 10px; line-height: 1.5; }
         .close-btn { background: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: bold; float: right; margin-top: 10px; }
 
+        /* Profile Modal Styles */
+        #profileModal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            z-index: 1001;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .profile-modal-content {
+            background: linear-gradient(135deg, #1e1b4b, #2d1b69);
+            border: 2px solid #6366f1;
+            border-radius: 20px;
+            padding: 40px 30px;
+            max-width: 380px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(99, 102, 241, 0.3), inset 0 0 30px rgba(99, 102, 241, 0.1);
+            text-align: center;
+            animation: slideIn 0.4s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .profile-avatar-large {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border: 3px solid #a78bfa;
+            box-shadow: 0 0 30px rgba(99, 102, 241, 0.7), inset 0 0 15px rgba(255, 255, 255, 0.15);
+            margin: 0 auto 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+        }
+
+        .profile-detail {
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .profile-label {
+            font-size: 12px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .profile-value {
+            font-size: 18px;
+            color: #6366f1;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .profile-wallet-value {
+            font-size: 32px;
+            color: #f59e0b;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .profile-close-btn {
+            background: linear-gradient(90deg, #ec4899, #8b5cf6);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 15px;
+            margin-top: 25px;
+            transition: all 200ms ease;
+            width: 100%;
+        }
+
+        .profile-close-btn:hover {
+            opacity: 0.95;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3);
+        }
+
+        .profile-close-btn:active {
+            transform: translateY(0);
+        }
+
         /* Toast Notification Styles */
         #toast-notification {
             position: fixed;
@@ -212,6 +349,38 @@
 
         /* Mobile Responsiveness */
         @media (max-width: 480px) {
+            .profile-avatar {
+                width: 45px;
+                height: 45px;
+                font-size: 20px;
+                top: 15px;
+                right: 15px;
+            }
+
+            .header {
+                padding: 15px;
+            }
+
+            .profile-modal-content {
+                padding: 30px 20px;
+                border-radius: 16px;
+            }
+
+            .profile-avatar-large {
+                width: 70px;
+                height: 70px;
+                font-size: 35px;
+                margin-bottom: 20px;
+            }
+
+            .profile-value {
+                font-size: 16px;
+            }
+
+            .profile-wallet-value {
+                font-size: 28px;
+            }
+
             .redeem-input-container {
                 flex-direction: column;
             }
@@ -264,6 +433,8 @@
     <div class="header">
         <h1>🎮 GAMEREWARD HUB</h1>
         <div class="wallet">🪙 <span id="balance">0</span> Coins</div>
+        <!-- Profile Avatar -->
+        <div class="profile-avatar" id="profileAvatar" onclick="openProfileModal()" title="View Profile">👤</div>
     </div>
 
     <!-- Task Zone -->
@@ -364,12 +535,96 @@
     </div>
 </div>
 
+<!-- Profile Modal Popup -->
+<div id="profileModal" class="modal">
+    <div class="profile-modal-content">
+        <div class="profile-avatar-large">👤</div>
+        
+        <div class="profile-detail">
+            <div class="profile-label">Username</div>
+            <div class="profile-value" id="profileUsername">User_0000</div>
+        </div>
+
+        <div class="profile-detail">
+            <div class="profile-label">User ID</div>
+            <div class="profile-value" id="profileUserID">RH-000000</div>
+        </div>
+
+        <div class="profile-detail">
+            <div class="profile-label">Wallet Balance</div>
+            <div class="profile-wallet-value" id="profileBalance">0</div>
+        </div>
+
+        <button class="profile-close-btn" onclick="closeProfileModal()">Close</button>
+    </div>
+</div>
+
 <!-- Toast Notification Container -->
 <div id="toast-notification" class="toast-hidden"></div>
 
 <script>
     let currentCoins = 0;
+    let userProfile = null;
 
+    // ========== PROFILE SYSTEM (localStorage) ==========
+    function initializeUserProfile() {
+        const storedProfile = localStorage.getItem('userProfile');
+        
+        if (storedProfile) {
+            // Load existing profile
+            userProfile = JSON.parse(storedProfile);
+            currentCoins = userProfile.coins;
+        } else {
+            // Generate new unique profile
+            userProfile = {
+                username: generateUsername(),
+                userID: generateUserID(),
+                coins: 0
+            };
+            localStorage.setItem('userProfile', JSON.stringify(userProfile));
+            currentCoins = 0;
+        }
+
+        // Update UI with profile data
+        updateBalanceDisplay();
+    }
+
+    function generateUserID() {
+        // Format: RH-XXXXXX (6-digit random number)
+        const randomNum = String(Math.floor(Math.random() * 1000000)).padStart(6, '0');
+        return `RH-${randomNum}`;
+    }
+
+    function generateUsername() {
+        // Format: User_XXXX (4-digit random string/number)
+        const randomStr = String(Math.floor(Math.random() * 10000)).padStart(4, '0');
+        return `User_${randomStr}`;
+    }
+
+    function saveUserProfileToStorage() {
+        if (userProfile) {
+            userProfile.coins = currentCoins;
+            localStorage.setItem('userProfile', JSON.stringify(userProfile));
+        }
+    }
+
+    function updateBalanceDisplay() {
+        document.getElementById('balance').innerText = currentCoins.toLocaleString();
+    }
+
+    function openProfileModal() {
+        document.getElementById('profileModal').style.display = 'flex';
+        // Populate modal with current profile data
+        document.getElementById('profileUsername').innerText = userProfile.username;
+        document.getElementById('profileUserID').innerText = userProfile.userID;
+        document.getElementById('profileBalance').innerText = currentCoins.toLocaleString();
+    }
+
+    function closeProfileModal() {
+        document.getElementById('profileModal').style.display = 'none';
+    }
+
+    // ========== TOAST NOTIFICATIONS ==========
     function showToast(message, type) {
         const toastContainer = document.getElementById('toast-notification');
         
@@ -487,7 +742,8 @@
         
         // Success Flow: Deduct coins and show success message
         currentCoins -= redeemAmount;
-        document.getElementById('balance').innerText = currentCoins.toLocaleString();
+        updateBalanceDisplay();
+        saveUserProfileToStorage(); // Save updated balance to localStorage
         showToast("Redeem Successful! Coins deducted.", "success");
         
         // Generate promo code and display the code box
@@ -506,9 +762,15 @@
     function openModal(id) {
         document.getElementById(id).style.display = 'flex';
     }
+
     function closeModal(id) {
         document.getElementById(id).style.display = 'none';
     }
+
+    // ========== INITIALIZE ON PAGE LOAD ==========
+    window.addEventListener('DOMContentLoaded', function() {
+        initializeUserProfile();
+    });
 </script>
 
 </body>
