@@ -71,12 +71,12 @@
         .card:hover { border-color: #6366f1; transform: translateY(-2px); }
         .task-info h3 { font-size: 16px; color: #fff; margin-bottom: 4px; }
         .task-info p { font-size: 12px; color: #94a3b8; }
-        .coin-tag { background: linear-gradient(180deg, #10b981, #059669); color: #fff; padding: 8px 14px; border-radius: 10px; font-weight: 700; font-size: 14px; cursor: pointer; text-decoration: none; transition: all 200ms ease; }
+        .coin-tag { background: linear-gradient(180deg, #10b981, #059669); color: #fff; padding: 8px 14px; border-radius: 10px; font-weight: 700; font-size: 14px; cursor: pointer; text-decoration: none; transition: all 200ms ease; border: none; }
         .coin-tag:hover { filter: brightness(1.04); }
         .coin-tag:disabled { cursor: not-allowed; opacity: 0.85; filter: none; }
         
         /* View More Tasks Button */
-        .view-more-btn { background: none; border: none; color: #6366f1; font-size: 14px; font-weight: 600; cursor: pointer; text-decoration: none; padding: 10px 0; margin: 20px 0; display: block; width: 100%; transition: color 200ms ease; }
+        .view-more-btn { background: none; border: none; color: #6366f1; font-size: 14px; font-weight: 600; cursor: pointer; text-decoration: none; padding: 10px 0; margin: 20px 0; display: block; width: 100%; transition: all 200ms ease; }
         .view-more-btn:hover { color: #818cf8; text-decoration: underline; }
         
         /* Loading Spinner Styles */
@@ -206,8 +206,8 @@
         .footer a:hover { text-decoration: underline; }
 
         /* Legal Modals (Popups) */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; padding: 20px; z-index: 1000; animation: fadeIn 0.3s ease; }
-        .modal-content { background: #1e293b; padding: 20px; border-radius: 12px; max-width: 450px; max-height: 75vh; overflow-y: auto; border: 1px solid #334155; text-align: left; position: relative; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6); }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; padding: 20px; z-index: 100; }
+        .modal-content { background: #1e293b; padding: 20px; border-radius: 12px; max-width: 450px; max-height: 75vh; overflow-y: auto; border: 1px solid #334155; text-align: left; position: relative; }
         .modal h3 { font-size: 18px; color: #fff; margin-bottom: 12px; border-bottom: 1px solid #334155; padding-bottom: 5px; }
         .modal p { font-size: 13px; color: #94a3b8; margin-bottom: 10px; line-height: 1.5; }
         .close-btn { background: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: bold; float: right; margin-top: 10px; }
@@ -557,7 +557,7 @@
         <h3>Terms of Service</h3>
         <p>Please read these terms carefully before using our platform.</p>
         <p><strong>1. Eligibility:</strong> Users must complete offers honestly. Multiple accounts per person are strictly prohibited.</p>
-        <p><strong>2. Fraud & VPN Prevention:</strong> Use of VPN, proxies, emulators, or automated bots to generate fake task completions will lead to an immediate ban and forfeiture of all accumulated coins.</p>
+        <p><strong>2. Fraud & VPN Prevention:</strong> Use of VPN, proxies, emulators, or automated bots to generate fake task completions will lead to an immediate ban and forfeiture of all accrued coins.</p>
         <p><strong>3. Reward Delivery:</strong> All valid reward redemption requests are manually verified and processed within 10 minutes to 4 hours.</p>
         <button class="close-btn" onclick="closeModal('termsModal')">Close</button>
     </div>
@@ -624,9 +624,23 @@
     }
 
     function generateUsername() {
-        // Format: User_XXXX (4-digit random string/number)
-        const randomStr = String(Math.floor(Math.random() * 10000)).padStart(4, '0');
-        return `User_${randomStr}`;
+        // Array of realistic names and nicknames for gaming/app users
+        const names = [
+            'Rahul', 'Aarav', 'Amit', 'Rohan', 'Karan', 'Vikram', 'Arjun', 'Kabir',
+            'GamerVeer', 'ProPlayer', 'Shadow', 'MaxGaming', 'Ninja', 'Phoenix',
+            'Striker', 'Blaze', 'Titan', 'Vortex', 'Apex', 'Echo', 'Raven', 'Storm'
+        ];
+        
+        // Pick a random name from the array
+        const randomName = names[Math.floor(Math.random() * names.length)];
+        
+        // Generate a random 2-4 digit number
+        const minNum = 10;  // 2 digits minimum
+        const maxNum = 9999; // 4 digits maximum
+        const randomNum = Math.floor(Math.random() * (maxNum - minNum + 1)) + minNum;
+        
+        // Format: Name_Number (e.g., Rahul_742, GamerVeer_98, etc.)
+        return `${randomName}_${randomNum}`;
     }
 
     function saveUserProfileToStorage() {
