@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameReward Hub - Earn Daily Codes</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+        body { background-color: #0f172a; color: #f8fafc; padding: 20px; }
+        .container { max-width: 500px; margin: 0 auto; }
+        
+        /* Header & Wallet */
+        .header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 25px;
+            padding: 20px;
+            background: linear-gradient(135deg, #1e1b4b, #311042);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        h1 { font-size: 24px; color: #6366f1; margin-bottom: 0; text-transform: uppercase; letter-spacing: 1px; }
+        .wallet { font-size: 22px; font-weight: bold; color: #f59e0b; background: rgba(0,0,0,0.3); display: inline-block; padding: 8px 20px; border-radius: 50px; border: 1px dashed #f59e0b; }
+        
+        /* Profile Avatar Circle */
+        .profile-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #0f172a; /* dark slate as requested */
+            border: 2px solid #10b981; /* bright green border */
+            box-shadow: 0 0 8px rgba(16,185,129,0.32);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: all 300ms ease;
+            user-select: none;
+            color: #ffffff; /* inner icon color */
+            flex: 0 0 auto;
+        }
+
+        .profile-avatar svg { width: 20px; height: 20px; display: block; }
+
+        .profile-avatar:hover {
+            transform: scale(1.08);
+            box-shadow: 0 0 14px rgba(16,185,129,0.45);
+        }
+
+        .profile-avatar:active {
+            transform: scale(0.95);
+        }
+        
+        /* Section Titles */
+        h2 { font-size: 18px; margin: 20px 0 10px 5px; color: #94a3b8; border-left: 4px solid #6366f1; padding-left: 8px; }
+        
+        /* Task Cards */
+        .card { background-color: #0b1220; border-radius: 12px; padding: 15px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #132033; transition: all 200ms ease; }
+        .card:hover { border-color: #6366f1; transform: translateY(-2px); }
+        .task-info h3 { font-size: 16px; color: #fff; margin-bottom: 4px; }
+        .task-info p { font-size: 12px; color: #94a3b8; }
+        .coin-tag { background: linear-gradient(180deg, #10b981, #059669); color: #fff; padding: 8px 14px; border-radius: 10px; font-weight: 700; font-size: 14px; cursor: pointer; text-decoration: none; transition: all 200ms ease; border: none; }
+        .coin-tag:hover { filter: brightness(1.04); }
+        .coin-tag:disabled { cursor: not-allowed; opacity: 0.85; filter: none; }
+        
+        /* View More Tasks Button */
+        .view-more-btn { background: none; border: none; color: #6366f1; font-size: 14px; font-weight: 600; cursor: pointer; text-decoration: none; padding: 10px 0; margin: 20px 0; display: block; width: 100%; transition: all 200ms ease; }
+        .view-more-btn:hover { color: #818cf8; text-decoration: underline; }
+        
+        /* Loading Spinner Styles */
+        .spinner-container { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; }
+        .spinner { width: 26px; height: 26px; border: 3px solid rgba(99, 102, 241, 0.15); border-top: 3px solid #6366f1; border-radius: 50%; animation: spin 1s linear infinite; }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .loading-text { font-size: 13px; color: #94a3b8; font-weight: 500; }
+        
+        /* Redeem Section */
+        .redeem-box { background: #1e293b; padding: 20px; border-radius: 12px; border: 1px dashed #334155; text-align: center; }
+        .redeem-subtitle { font-size: 14px; color: #94a3b8; margin-top: 12px; margin-bottom: 12px; font-weight: 500; line-height: 1.5; }
+        
+        /* Dynamic Redeem Input Container */
+        .redeem-input-container { display: flex; gap: 10px; justify-content: center; align-items: center; margin: 15px 0; flex-wrap: wrap; }
+        
+        /* Redeem Input Field Styling */
+        #redeemAmount {
+            flex: 1;
+            min-width: 150px;
+            background-color: #1e293b;
+            color: #ffffff;
+            border: 1px solid #334155;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 200ms ease;
+            text-align: center;
+        }
+        
+        #redeemAmount::placeholder {
+            color: #64748b;
+        }
+        
+        #redeemAmount:focus {
+            outline: none;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+            background-color: #0f172a;
+        }
+        
+        #redeemAmount::-webkit-outer-spin-button,
+        #redeemAmount::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        
+        #redeemAmount[type=number] {
+            -moz-appearance: textfield;
+        }
+        
+        .redeem-btn { background: linear-gradient(90deg, #ec4899, #8b5cf6); color: white; border: none; padding: 10px 30px; font-size: 15px; font-weight: bold; border-radius: 8px; cursor: pointer; transition: all 200ms ease; }
+        .redeem-btn:hover { opacity: 0.95; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3); }
+        .redeem-btn:active { transform: translateY(0); }
+        .note { font-size: 11px; color: #94a3b8; margin-top: 8px; }
+
+        /* Redeem Code Box Styling */
+        .code-box-hidden {
+            display: none;
+        }
+
+        .code-box-visible {
+            display: flex;
+            animation: fadeIn 0.5s ease;
+            margin-top: 15px;
+            background-color: #0f172a;
+            border: 2px solid #6366f1;
+            border-radius: 10px;
+            padding: 12px 16px;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.2);
+        }
+
+        .redeem-code-text {
+            font-size: 16px;
+            font-weight: 700;
+            color: #6366f1;
+            letter-spacing: 2px;
+            flex: 1;
+            word-break: break-all;
+        }
+
+        .copy-btn {
+            background: linear-gradient(90deg, #6366f1, #8b5cf6);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 200ms ease;
+            margin-left: 10px;
+            white-space: nowrap;
+        }
+
+        .copy-btn:hover {
+            opacity: 0.9;
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+        }
+
+        .copy-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Professional Footer */
+        .footer { text-align: center; margin-top: 40px; padding: 20px 10px; border-top: 1px solid #0b1220; font-size: 12px; color: #64748b; line-height: 1.8; }
+        .footer a { color: #6366f1; text-decoration: none; margin: 0 8px; font-weight: 500; }
+        .footer a:hover { text-decoration: underline; }
+
+        /* Legal Modals (Popups) */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; padding: 20px; z-index: 100; }
+        .modal-content { background: #1e293b; padding: 20px; border-radius: 12px; max-width: 450px; max-height: 75vh; overflow-y: auto; border: 1px solid #334155; text-align: left; position: relative; }
+        .modal h3 { font-size: 18px; color: #fff; margin-bottom: 12px; border-bottom: 1px solid #334155; padding-bottom: 5px; }
+        .modal p { font-size: 13px; color: #94a3b8; margin-bottom: 10px; line-height: 1.5; }
+        .close-btn { background: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: bold; float: right; margin-top: 10px; }
+
+        /* Profile Modal Styles */
+        #profileModal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            z-index: 1001;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .profile-modal-content {
+            background: linear-gradient(135deg, #1e1b4b, #2d1b69);
+            border: 2px solid #6366f1;
+            border-radius: 20px;
+            padding: 40px 30px;
+            max-width: 380px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(99, 102, 241, 0.3), inset 0 0 30px rgba(99, 102, 241, 0.1);
+            text-align: center;
+            animation: slideIn 0.4s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .profile-avatar-large {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: #0f172a;
+            border: 2px solid #10b981;
+            box-shadow: 0 0 16px rgba(16,185,129,0.5);
+            margin: 0 auto 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            color: #ffffff;
+        }
+
+        .profile-detail {
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .profile-label {
+            font-size: 12px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .profile-value {
+            font-size: 18px;
+            color: #6366f1;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .profile-wallet-value {
+            font-size: 32px;
+            color: #f59e0b;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .profile-close-btn {
+            background: linear-gradient(90deg, #ec4899, #8b5cf6);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 15px;
+            margin-top: 25px;
+            transition: all 200ms ease;
+            width: 100%;
+        }
+
+        .profile-close-btn:hover {
+            opacity: 0.95;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3);
+        }
+
+        .profile-close-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Toast Notification Styles */
+        #toast-notification {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        .toast-hidden {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 400ms ease, visibility 400ms ease;
+        }
+
+        .toast-visible {
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 400ms ease, visibility 400ms ease;
+        }
+
+        .toast-content {
+            background: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(12px);
+            color: #f8fafc;
+            padding: 16px 24px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            font-size: 15px;
+            font-weight: 500;
+            max-width: 400px;
+            text-align: center;
+            line-height: 1.4;
+            border-left: 4px solid #6366f1;
+        }
+
+        .toast-content.error {
+            border-left-color: #ef4444;
+            background: rgba(30, 41, 59, 0.98);
+        }
+
+        .toast-content.success {
+            border-left-color: #10b981;
+            background: rgba(30, 41, 59, 0.98);
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 480px) {
+            .profile-avatar {
+                width: 35px;
+                height: 35px;
+                font-size: 18px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            .header {
+                padding: 15px;
+            }
+
+            .profile-modal-content {
+                padding: 30px 20px;
+                border-radius: 16px;
+            }
+
+            .profile-avatar-large {
+                width: 80px;
+                height: 80px;
+                font-size: 40px;
+                margin-bottom: 20px;
+            }
+
+            .profile-value {
+                font-size: 16px;
+            }
+
+            .profile-wallet-value {
+                font-size: 28px;
+            }
+
+            .redeem-input-container {
+                flex-direction: column;
+            }
+            
+            #redeemAmount {
+                width: 100%;
+                min-width: unset;
+            }
+            
+            .redeem-btn {
+                width: 100%;
+            }
+
+            .code-box-visible {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+
+            .redeem-code-text {
+                width: 100%;
+                text-align: center;
+            }
+
+            .copy-btn {
+                width: 100%;
+                margin-left: 0;
+                text-align: center;
+            }
+
+            #toast-notification {
+                bottom: 20px;
+                left: 10px;
+                right: 10px;
+                transform: none;
+            }
+
+            .toast-content {
+                max-width: 100%;
+                font-size: 14px;
+                padding: 14px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Wallet Header -->
+    <div class="header">
+        <div class="header-top">
+            <h1>🎮 GAMEREWARD HUB</h1>
+            <!-- Profile Avatar -->
+            <div class="profile-avatar" id="profileAvatar" onclick="openProfileModal()" title="View Profile" aria-label="Profile">
+                <!-- white user icon SVG -->
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path fill="#ffffff" d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            </div>
+        </div>
+        <div class="wallet">🪙 <span id="balance">0</span> Coins</div>
+    </div>
+
+    <!-- Task Zone -->
+    <h2>🔥 Top High Paying Tasks</h2>
+    
+    <div class="card">
+        <div class="task-info">
+            <h3>WinZO Games</h3>
+            <p>Install + Register with New Number</p>
+        </div>
+        <button class="coin-tag" onclick="handleTaskClick(this)">+ 950 Coins</button>
+    </div>
+
+    <div class="card">
+        <div class="task-info">
+            <h3>Moj App</h3>
+            <p>Download + Watch Videos for 2 Mins</p>
+        </div>
+        <button class="coin-tag" onclick="handleTaskClick(this)">+ 800 Coins</button>
+    </div>
+
+    <div class="card">
+        <div class="task-info">
+            <h3>Temple Run 2</h3>
+            <p>Install + Play for 5 Mins</p>
+        </div>
+        <button class="coin-tag" onclick="handleTaskClick(this)">+ 600 Coins</button>
+    </div>
+
+    <div class="card">
+        <div class="task-info">
+            <h3>Asphalt 9: Car Racing</h3>
+            <p>Install + Finish 1st Race</p>
+        </div>
+        <button class="coin-tag" onclick="handleTaskClick(this)">+ 750 Coins</button>
+    </div>
+
+    <div class="card">
+        <div class="task-info">
+            <h3>Ludo King</h3>
+            <p>Install + Play 1 Online Match</p>
+        </div>
+        <button class="coin-tag" onclick="handleTaskClick(this)">+ 500 Coins</button>
+    </div>
+
+    <!-- View More Tasks Button -->
+    <button class="view-more-btn" id="viewMoreBtn" onclick="viewMoreTasks()">✨ View More Tasks</button>
+
+    <!-- Redeem Zone -->
+    <h2>🎁 Withdraw Rewards</h2>
+    <p class="redeem-subtitle">Get Redeem Codes for Free Fire, BGMI, and more games</p>
+    <div class="redeem-box">
+        <div class="redeem-input-container">
+            <input type="number" id="redeemAmount" placeholder="Enter Coins (e.g., 1000)" min="1">
+            <button class="redeem-btn" onclick="redeemCode()">Redeem Now</button>
+        </div>
+        <p class="note">⚠️ Minimum: 1,000 Coins | Delivery: 10 Minutes to 4 Hours</p>
+        
+        <!-- Redeem Code Display Box -->
+        <div id="redeem-code-box" class="code-box-hidden">
+            <span class="redeem-code-text" id="redeem-code-text"></span>
+            <button class="copy-btn" onclick="copyRedeemCode()">📋 Copy</button>
+        </div>
+    </div>
+
+    <!-- Professional Footer Links -->
+    <div class="footer">
+        <p>© 2026 GameReward Hub. All Rights Reserved.</p>
+        <p>Contact Support: <span style="color: #e2e8f0;">support@gamerewardhub.com</span></p>
+        <p style="margin-top: 5px;">
+            <a href="javascript:void(0)" onclick="openModal('privacyModal')">Privacy Policy</a> | 
+            <a href="javascript:void(0)" onclick="openModal('termsModal')">Terms of Service</a>
+        </p>
+    </div>
+</div>
+
+<!-- Privacy Policy Popup -->
+<div id="privacyModal" class="modal">
+    <div class="modal-content">
+        <h3>Privacy Policy</h3>
+        <p>Welcome to GameReward Hub. Your privacy is critically important to us.</p>
+        <p><strong>1. Data Collection:</strong> We only collect minimal user identification to securely track and credit coins after successful task completion.</p>
+        <p><strong>2. Third-Party Advertisers:</strong> We partner with trusted offerwall networks. These networks may track app installation status to verify your rewards accurately.</p>
+        <p><strong>3. Data Security:</strong> Your virtual wallet balance and task history are completely protected and are never shared with any unauthorized third parties.</p>
+        <button class="close-btn" onclick="closeModal('privacyModal')">Close</button>
+    </div>
+</div>
+
+<!-- Terms of Service Popup -->
+<div id="termsModal" class="modal">
+    <div class="modal-content">
+        <h3>Terms of Service</h3>
+        <p>Please read these terms carefully before using our platform.</p>
+        <p><strong>1. Eligibility:</strong> Users must complete offers honestly. Multiple accounts per person are strictly prohibited.</p>
+        <p><strong>2. Fraud & VPN Prevention:</strong> Use of VPN, proxies, emulators, or automated bots to generate fake task completions will lead to an immediate ban and forfeiture of all accrued coins.</p>
+        <p><strong>3. Reward Delivery:</strong> All valid reward redemption requests are manually verified and processed within 10 minutes to 4 hours.</p>
+        <button class="close-btn" onclick="closeModal('termsModal')">Close</button>
+    </div>
+</div>
+
+<!-- Profile Modal Popup -->
+<div id="profileModal" class="modal">
+    <div class="profile-modal-content">
+        <div class="profile-avatar-large">👤</div>
+        
+        <div class="profile-detail">
+            <div class="profile-label">Username</div>
+            <div class="profile-value" id="profileUsername">User_0000</div>
+        </div>
+
+        <div class="profile-detail">
+            <div class="profile-label">User ID</div>
+            <div class="profile-value" id="profileUserID">RH-000000</div>
+        </div>
+
+        <div class="profile-detail">
+            <div class="profile-label">Wallet Balance</div>
+            <div class="profile-wallet-value" id="profileBalance">0</div>
+        </div>
+
+        <button class="profile-close-btn" onclick="closeProfileModal()">Close</button>
+    </div>
+</div>
+
+<!-- Toast Notification Container -->
+<div id="toast-notification" class="toast-hidden"></div>
+
+<script>
+    let currentCoins = 0;
+    let userProfile = null;
+
+    // ========== PROFILE SYSTEM (localStorage) ==========
+    function initializeUserProfile() {
+        const storedProfile = localStorage.getItem('userProfile');
+        
+        if (storedProfile) {
+            // Load existing profile
+            userProfile = JSON.parse(storedProfile);
+            currentCoins = userProfile.coins;
+        } else {
+            // Generate new unique profile
+            userProfile = {
+                username: generateUsername(),
+                userID: generateUserID(),
+                coins: 0
+            };
+            localStorage.setItem('userProfile', JSON.stringify(userProfile));
+            currentCoins = 0;
+        }
+
+        // Update UI with profile data
+        updateBalanceDisplay();
+    }
+
+    function generateUserID() {
+        // Format: RH-XXXXXX (6-digit random number)
+        const randomNum = String(Math.floor(Math.random() * 1000000)).padStart(6, '0');
+        return `RH-${randomNum}`;
+    }
+
+    function generateUsername() {
+        // Array of realistic names and nicknames for gaming/app users
+        const names = [
+            'Rahul', 'Aarav', 'Amit', 'Rohan', 'Karan', 'Vikram', 'Arjun', 'Kabir',
+            'GamerVeer', 'ProPlayer', 'Shadow', 'MaxGaming', 'Ninja', 'Phoenix',
+            'Striker', 'Blaze', 'Titan', 'Vortex', 'Apex', 'Echo', 'Raven', 'Storm'
+        ];
+        
+        // Pick a random name from the array
+        const randomName = names[Math.floor(Math.random() * names.length)];
+        
+        // Generate a random 2-4 digit number
+        const minNum = 10;  // 2 digits minimum
+        const maxNum = 9999; // 4 digits maximum
+        const randomNum = Math.floor(Math.random() * (maxNum - minNum + 1)) + minNum;
+        
+        // Format: Name_Number (e.g., Rahul_742, GamerVeer_98, etc.)
+        return `${randomName}_${randomNum}`;
+    }
+
+    function saveUserProfileToStorage() {
+        if (userProfile) {
+            userProfile.coins = currentCoins;
+            localStorage.setItem('userProfile', JSON.stringify(userProfile));
+        }
+    }
+
+    function updateBalanceDisplay() {
+        document.getElementById('balance').innerText = currentCoins.toLocaleString();
+    }
+
+    function openProfileModal() {
+        document.getElementById('profileModal').style.display = 'flex';
+        // Populate modal with current profile data
+        document.getElementById('profileUsername').innerText = userProfile.username;
+        document.getElementById('profileUserID').innerText = userProfile.userID;
+        document.getElementById('profileBalance').innerText = currentCoins.toLocaleString();
+    }
+
+    function closeProfileModal() {
+        document.getElementById('profileModal').style.display = 'none';
+    }
+
+    // ========== TOAST NOTIFICATIONS ==========
+    function showToast(message, type) {
+        const toastContainer = document.getElementById('toast-notification');
+        
+        // Create toast content div
+        const toastContent = document.createElement('div');
+        toastContent.className = `toast-content ${type}`;
+        toastContent.innerText = message;
+        
+        // Clear previous toast
+        toastContainer.innerHTML = '';
+        toastContainer.appendChild(toastContent);
+        
+        // Add visible class to trigger fade-in animation
+        toastContainer.classList.remove('toast-hidden');
+        toastContainer.classList.add('toast-visible');
+        
+        // Auto-hide after 2 seconds (2000ms)
+        setTimeout(() => {
+            toastContainer.classList.remove('toast-visible');
+            toastContainer.classList.add('toast-hidden');
+        }, 2000);
+    }
+
+    function generatePromoCode() {
+        // Generate a realistic Google Play promo code format: GPLAY-XXXX-XXXX-XXXX
+        const randomSegment = () => {
+            return Math.random().toString(36).substring(2, 6).toUpperCase();
+        };
+        return `GPLAY-${randomSegment()}-${randomSegment()}-${randomSegment()}`;
+    }
+
+    function handleTaskClick(button) {
+        // Save the original button text
+        const originalText = button.innerText;
+        
+        // Disable the button and show loading spinner
+        button.disabled = true;
+        button.innerHTML = '<div class="spinner-container"><div class="spinner"></div></div>';
+        
+        // After 2 seconds, show the pending status message
+        setTimeout(() => {
+            button.innerHTML = 'Connection pending. Active soon!';
+            // Button remains disabled while showing pending message
+            
+            // After 2 more seconds (4 total), restore the button to original state
+            setTimeout(() => {
+                button.innerText = originalText;
+                button.disabled = false;
+            }, 2000);
+        }, 2000);
+    }
+
+    function viewMoreTasks() {
+        const btn = document.getElementById('viewMoreBtn');
+        const originalContent = btn.innerHTML;
+        
+        // Replace button content with loading spinner and searching text
+        btn.innerHTML = '<div class="spinner-container"><div class="spinner"></div><span class="loading-text">Searching for more tasks...</span></div>';
+        btn.disabled = true;
+        btn.style.cursor = 'not-allowed';
+        
+        // Show spinner and searching text for 2 seconds
+        setTimeout(() => {
+            // After 2 seconds, switch to pending text (no spinner) for another 2 seconds
+            btn.innerHTML = 'Connection pending. Active soon!';
+            // Keep the button disabled while pending
+            
+            setTimeout(() => {
+                // After total 4 seconds, smoothly restore the original button content and state
+                btn.style.transition = 'opacity 180ms ease';
+                btn.style.opacity = '0';
+                setTimeout(() => {
+                    btn.innerHTML = originalContent;
+                    btn.disabled = false;
+                    btn.style.cursor = 'pointer';
+                    btn.style.opacity = '1';
+                }, 200);
+            }, 2000);
+        }, 2000);
+    }
+
+    function copyRedeemCode() {
+        const codeText = document.getElementById('redeem-code-text').innerText;
+        
+        // Copy to clipboard
+        navigator.clipboard.writeText(codeText).then(() => {
+            showToast("Code Copied to Clipboard!", "success");
+        }).catch((err) => {
+            // Fallback for older browsers
+            const textArea = document.createElement('textarea');
+            textArea.value = codeText;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            showToast("Code Copied to Clipboard!", "success");
+        });
+    }
+
+    function redeemCode() {
+        const redeemInput = document.getElementById('redeemAmount');
+        const redeemAmount = parseInt(redeemInput.value);
+        
+        // Validation 1: Check if input is empty or less than 1000
+        if (isNaN(redeemAmount) || redeemAmount < 1000) {
+            showToast("Minimum 1,000 Coins required to redeem!", "error");
+            return;
+        }
+        
+        // Validation 2: Check if user has sufficient balance
+        if (redeemAmount > currentCoins) {
+            showToast("Insufficient Balance! Complete more tasks to collect enough coins.", "error");
+            return;
+        }
+        
+        // Success Flow: Deduct coins and show success message
+        currentCoins -= redeemAmount;
+        updateBalanceDisplay();
+        saveUserProfileToStorage(); // Save updated balance to localStorage
+        showToast("Redeem Successful! Coins deducted.", "success");
+        
+        // Generate promo code and display the code box
+        const promoCode = generatePromoCode();
+        const redeemCodeBox = document.getElementById('redeem-code-box');
+        const redeemCodeText = document.getElementById('redeem-code-text');
+        
+        redeemCodeText.innerText = promoCode;
+        redeemCodeBox.classList.remove('code-box-hidden');
+        redeemCodeBox.classList.add('code-box-visible');
+        
+        // Clear the input field after successful redemption
+        redeemInput.value = '';
+    }
+
+    function openModal(id) {
+        document.getElementById(id).style.display = 'flex';
+    }
+
+    function closeModal(id) {
+        document.getElementById(id).style.display = 'none';
+    }
+
+    // ========== INITIALIZE ON PAGE LOAD ==========
+    window.addEventListener('DOMContentLoaded', function() {
+        initializeUserProfile();
+    });
+</script>
+
+</body>
+</html>
